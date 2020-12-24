@@ -304,7 +304,15 @@ class Sequential_Cascade_Feeder():
 
     def queque_handler(self):
         # Do this to force run all networks s.t. the network inference time stabilizes
-        self.single_debug()
+	# set debug trace
+        #self.single_debug()
+        #import pdb
+        #msg = "this is a test"
+       # pdb.set_trace()
+        #print(msg)
+
+
+
 
         camera = Camera()
         camera_thread = Thread(target=camera.fill_queue, args=(self.main_deque,), daemon=True)
@@ -625,8 +633,8 @@ class Cascade:
 class NodeBot():
     def __init__(self):
         #Insert Chat ID and Bot Token according to Telegram API
-        self.CHAT_ID = 'XXXXXXXXXXXXXXXXXXXXXX'
-        self.BOT_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXX'
+        self.CHAT_ID = '1461690830'
+        self.BOT_TOKEN = '1461007440:AAGHBIn7xm2hj-4Hi8uYG_sskTZep1z3UxI'
 
         self.last_msg_id = 0
         self.bot_updater = Updater(token=self.BOT_TOKEN)
@@ -705,8 +713,12 @@ class NodeBot():
     def send_text(self, message):
         telegram.Bot(token=self.BOT_TOKEN).send_message(chat_id=self.CHAT_ID, text=message, parse_mode=telegram.ParseMode.MARKDOWN)
 
-    def send_img(self, img, caption):
-        cv2.imwrite('degubi.jpg', img)
+    def send_img(/home/pi/CatPreyAnalyzer/images catself, img, caption):
+        from datetime import datetime
+
+        outfile = '%s/%s.jpg' % ( str(datetime.now()))
+        cv2.imwrite(outfile, img)
+        #cv2.imwrite('degubi.jpg', img)
         telegram.Bot(token=self.BOT_TOKEN).send_photo(chat_id=self.CHAT_ID, photo=open('degubi.jpg', 'rb'), caption=caption)
 
 class DummyDQueque():

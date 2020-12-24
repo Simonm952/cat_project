@@ -264,9 +264,9 @@ class PC_Stage():
         }
         if 'F1' in self.pc_model_name:
             self.pc_model = tf.keras.models.load_model(os.path.join(PC_models_dir, self.pc_model_name),
-                                                       custom_objects=dependencies)
+                                                       custom_objects=dependencies,compile=False)
         else:
-            self.pc_model = tf.keras.models.load_model(os.path.join(PC_models_dir, self.pc_model_name))
+            self.pc_model = tf.keras.models.load_model(os.path.join(PC_models_dir, self.pc_model_name),compile=False)
 
     def get_f1(self, y_true, y_pred):  # taken from old keras source code
         K = tf.keras.backend
@@ -323,7 +323,7 @@ class FF_Stage():
         # Handle args
         self.models_dir = FF_models_dir
         self.ff_model_name = '256_05_mobileNet_50_Epochs_2020_05_07_14_56_25.h5'
-        self.ff_model = tf.keras.models.load_model(os.path.join(self.models_dir, self.ff_model_name))
+        self.ff_model = tf.keras.models.load_model(os.path.join(self.models_dir, self.ff_model_name),compile=False)
 
     def resize_img(self, img_org):
         return cv2.resize(img_org, (self.TARGET_SIZE, self.TARGET_SIZE)) * (1. / 255)
@@ -351,7 +351,7 @@ class Eye_Stage():
     def __init__(self):
         self.TARGET_SIZE = 224
         model_name = 'trainwhole100_Epochs_2020_04_30_18_05_25.h5'
-        self.eye_model = tf.keras.models.load_model(os.path.join(EYE_models_dir, model_name))
+        self.eye_model = tf.keras.models.load_model(os.path.join(EYE_models_dir, model_name),compile=False)
 
     def resize_img(self, img_resize):
         old_size = img_resize.shape[:2]  # old_size is in (height, width) format
