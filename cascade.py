@@ -713,7 +713,7 @@ class NodeBot():
     def send_text(self, message):
         telegram.Bot(token=self.BOT_TOKEN).send_message(chat_id=self.CHAT_ID, text=message, parse_mode=telegram.ParseMode.MARKDOWN)
 
-    def send_img(/home/pi/CatPreyAnalyzer/images catself, img, caption):
+    def send_img(self, img, caption):
         from datetime import datetime
 
         outfile = '%s/%s.jpg' % ( str(datetime.now()))
