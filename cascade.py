@@ -303,9 +303,10 @@ class Sequential_Cascade_Feeder():
         return cascade_obj
 
     def queque_handler(self):
+
         # Do this to force run all networks s.t. the network inference time stabilizes
 	# set debug trace
-        #self.single_debug()
+        self.single_debug()
         #import pdb
         #msg = "this is a test"
        # pdb.set_trace()
@@ -714,11 +715,11 @@ class NodeBot():
         telegram.Bot(token=self.BOT_TOKEN).send_message(chat_id=self.CHAT_ID, text=message, parse_mode=telegram.ParseMode.MARKDOWN)
 
     def send_img(self, img, caption):
-        from datetime import datetime
+        #from datetime import datetime
 
-        outfile = '%s/%s.jpg' % ( str(datetime.now()))
-        cv2.imwrite(outfile, img)
-        #cv2.imwrite('degubi.jpg', img)
+        #outfile = '%s/%s.jpg' % ( str(datetime.now()))
+        #cv2.imwrite(outfile, img)
+        cv2.imwrite('degubi.jpg', img)
         telegram.Bot(token=self.BOT_TOKEN).send_photo(chat_id=self.CHAT_ID, photo=open('degubi.jpg', 'rb'), caption=caption)
 
 class DummyDQueque():

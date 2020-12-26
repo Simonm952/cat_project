@@ -27,9 +27,9 @@ class Camera:
         while(1):
             gc.collect()
             camera = PiCamera()
-            camera.framerate = 5
-            camera.vflip = True
-            camera.hflip = True
+            camera.framerate = 3
+            camera.vflip = False
+            camera.hflip = False
             camera.resolution = (2592, 1944)
             camera.exposure_mode = 'sports'
             stream = io.BytesIO()
