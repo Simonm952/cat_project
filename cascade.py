@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 
 sys.path.append('/home/pi/CatPreyAnalyzer')
 sys.path.append('/home/pi')
+
 from CatPreyAnalyzer.model_stages import PC_Stage, FF_Stage, Eye_Stage, Haar_Stage, CC_MobileNet_Stage
 from CatPreyAnalyzer.camera_class import Camera
 cat_cam_py = str(Path(os.getcwd()).parents[0])

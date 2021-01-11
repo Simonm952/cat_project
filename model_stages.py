@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 from pathlib import Path
 import os, cv2, time, sys
+import numpy
+import tensorflow
 
 from object_detection.utils import label_map_util
 
@@ -12,7 +14,7 @@ FF_models_dir = os.path.join(cat_cam_py, 'CatPreyAnalyzer/models/Face_Fur_Classi
 EYE_models_dir = os.path.join(cat_cam_py, 'CatPreyAnalyzer/models/Eye_Detector')
 HAAR_models_dir = os.path.join(cat_cam_py, 'CatPreyAnalyzer/models/Haar_Classifier')
 CR_models_dir = os.path.join(cat_cam_py, 'CatPreyAnalyzer/models/Cat_Recognizer')
-
+print(tensorflow.__version__)
 
 class CC_MobileNet_Stage():
     def __init__(self):
@@ -25,8 +27,10 @@ class CC_MobileNet_Stage():
     def init_cnn_model(self):
         #### Initialize TensorFlow model ####
 
-        # This is needed since the working directory is the object_detection folder.
+        # This is needed since the working directory is the object_detection   folder.
         sys.path.append('..')
+
+        os.environ["PYTHONPATH"] = 'PYTHONPATH=$PYTHONPATH:/home/pi/tensorflow/models/research:/home/pi/tensorflow/models/research/slim:/home/pi/.local/lib/python3.7/site-packages'
 
         # Grab path to current working directory
         print(os.environ['PYTHONPATH'].split(os.pathsep)[1])
@@ -253,11 +257,12 @@ class PC_Stage():
         self.tp = 0
         self.tn = 0
         self.fn = 0
+        
         self.inference_time_list = []
-
+        
         #Handle args
         self.models_dir = PC_models_dir
-        self.pc_model_name = '0.86_512_05_VGG16_ownData_FTfrom15_350_Epochs_2020_05_15_11_40_56.h5'
+        self.pc_model_name = 'my_model_mac_trained_6.h5'
 
         dependencies = {
             'get_f1': self.get_f1
@@ -266,7 +271,8 @@ class PC_Stage():
             self.pc_model = tf.keras.models.load_model(os.path.join(PC_models_dir, self.pc_model_name),
                                                        custom_objects=dependencies)
         else:
-            self.pc_model = tf.keras.models.load_model(os.path.join(PC_models_dir, self.pc_model_name))
+            # self.pc_model = load_model(os.path.join(PC_models_dir, self.pc_model_name))
+             self.pc_model = tf.keras.models.load_model(os.path.join(PC_models_dir, self.pc_model_name))
 
     def get_f1(self, y_true, y_pred):  # taken from old keras source code
         K = tf.keras.backend
@@ -279,7 +285,7 @@ class PC_Stage():
         return f1_val
 
     def resize_img(self, img_org):
-        return cv2.resize(img_org, (self.TARGET_SIZE, self.TARGET_SIZE)) * (1. / 255)
+        return cv2.resize(img_org, (self.TARGET_SIZE, self.TARGET_SIZE)) 
 
     def pc_prediction(self, img, pc_model):
         preprocessed_img = self.resize_img(img_org=img).reshape((1, self.TARGET_SIZE, self.TARGET_SIZE, 3))
