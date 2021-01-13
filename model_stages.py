@@ -284,7 +284,10 @@ class PC_Stage():
         f1_val = 2 * (precision * recall) / (precision + recall + K.epsilon())
         return f1_val
 
+       
+
     def resize_img(self, img_org):
+        
         return cv2.resize(img_org, (self.TARGET_SIZE, self.TARGET_SIZE)) 
 
     def pc_prediction(self, img, pc_model):
@@ -292,7 +295,7 @@ class PC_Stage():
         start_time = time.time()
         class_pred = pc_model.predict(preprocessed_img)
         inference_time = time.time() - start_time
-
+        print('Total Runtime:', time.time() - start_time)
         return class_pred[0][0], inference_time
 
 
